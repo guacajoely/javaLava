@@ -1,12 +1,39 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 class javaLava {
+
+    public static int getRandoNum(int min, int max, int[] exclude) {
+        Arrays.sort(exclude);
+        int random = min + (int) ((max - min + 1 - exclude.length) * Math.random());
+        for (int ex : exclude) {
+            if (random < ex) {
+                break;
+            }
+            random++;
+        }
+        return random;
+    }
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-         
+
         String command = "";
         int square = 3;
+        int lastSafeSquare = 3;
+
+        // creates array of 5 squares between 1 and 25
+        // (excluding the starting square #3, and any previously selected squares)
+        // This array of numbers will be our "LAVA SQUARES"
+        int[] lavaSquares = new int[5];
+        int[] excludedNums = new int[6];
+        excludedNums[0] = 3;
+
+        for (int i = 0; i < lavaSquares.length; i++) {
+            lavaSquares[i] = getRandoNum(1, 26, excludedNums);
+            excludedNums[i + 1] = lavaSquares[i];
+        }
 
         while (true) {
 
@@ -17,7 +44,8 @@ class javaLava {
                 System.out.println("Type 'U' to move up,");
                 System.out.println("'L' to move left,");
                 System.out.println("'R' to move right.");
-                System.out.println("or 'G' to view the grid");
+                System.out.println("'G' to view the grid");
+                System.out.println("or 'C' to CHEAT!");
 
                 // get user input
                 System.out.print("> ");
@@ -28,41 +56,40 @@ class javaLava {
                     square = square + 5;
                     System.out.println("");
 
-                    if(square < 26)
-                    System.out.println("You stepped forward onto square " + square);
+                    if (square < 26)
+                        System.out.println("You stepped forward onto square " + square);
                 }
 
                 else if (command.toLowerCase().equals("l")) {
-                    if (square != 1 
-                        && square != 6 
-                        && square != 11
-                        && square != 16
-                        && square != 21){
-                            square--;
-                            System.out.println("");
-                            System.out.println("You stepped LEFT onto square " + square);     
-                   }
-                   
-                   else{ 
+                    if (square != 1
+                            && square != 6
+                            && square != 11
+                            && square != 16
+                            && square != 21) {
+                        square--;
+                        System.out.println("");
+                        System.out.println("You stepped LEFT onto square " + square);
+                    }
+
+                    else {
                         System.out.println("");
                         System.out.println("You can't move any further left!");
                         System.out.println("You must go UP or RIGHT.");
-                   }
-                    
+                    }
+
                 }
 
                 else if (command.toLowerCase().equals("r")) {
-                    if (square%5 == 0){
+                    if (square % 5 == 0) {
                         System.out.println("");
                         System.out.println("You can't move any further RIGHT!");
-                        System.out.println("You must go UP or LEFT.");    
-                   }
-                   else{ 
+                        System.out.println("You must go UP or LEFT.");
+                    } else {
                         square++;
                         System.out.println("");
-                        System.out.println("You stepped RIGHT onto square " + square); 
-                   }
-                    
+                        System.out.println("You stepped RIGHT onto square " + square);
+                    }
+
                 }
 
                 else if (command.toLowerCase().equals("g")) {
@@ -85,17 +112,25 @@ class javaLava {
                             "|  01  |  02  |  03  |  04  |  05  |\r\n" + //
                             "|______|______|______|______|______|\r\n" + //
                             "                 ↑↑\r\n" + //
-                            "             START HERE");   
+                            "             START HERE");
+                }
+
+                else if (command.toLowerCase().equals("c")) {
+                    System.out.println("");
+                    System.out.println("The squares that are lava are...");
+                    for (int i = 0; i < lavaSquares.length; i++) {
+                        System.out.println(lavaSquares[i]);
+                    }
                 }
 
                 else {
-                        System.out.println("");
-                        System.out.println("Please enter a valid response.");
+                    System.out.println("");
+                    System.out.println("Please enter a valid response.");
                 }
-                
+
             }
 
-            else{
+            else {
                 System.out.println("");
                 System.out.println("You WIN! Play Again?");
                 System.out.println("Type 'Y' for yes or 'N' for no");
@@ -103,8 +138,21 @@ class javaLava {
                 command = sc.nextLine();
 
                 if (command.toLowerCase().equals("y")) {
+
+                    // RESET EVERYTHING
                     square = 3;
-                    command="";
+                    command = "";
+                    lavaSquares = new int[5];
+                    excludedNums = new int[6];
+                    excludedNums[0] = 3;
+
+                    for (int i = 0; i < lavaSquares.length; i++) {
+                        lavaSquares[i] = getRandoNum(1, 26, excludedNums);
+                        excludedNums[i + 1] = lavaSquares[i];
+                    }
+
+                    System.out.println("");
+                    System.out.println("");
                     System.out.println("");
                 }
 
@@ -117,7 +165,6 @@ class javaLava {
                 }
 
             }
-
 
         }
     }
