@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 class javaLava {
 
+    //get random number that also excludes an array of numbers from future selection
     public static int getRandoNum(int min, int max, int[] exclude) {
         Arrays.sort(exclude);
         int random = min + (int) ((max - min + 1 - exclude.length) * Math.random());
@@ -21,17 +22,19 @@ class javaLava {
 
         String command = "";
         int square = 3;
+        
+        //last auto save
         int lastSafeSquare = 3;
 
-        // creates array of 5 squares between 1 and 25
-        // (excluding the starting square #3, and any previously selected squares)
-        // This array of numbers will be our "LAVA SQUARES"
-        int[] lavaSquares = new int[5];
-        int[] excludedNums = new int[6];
+        // creates array of 7 squares between 1 and 25
+        int[] lavaSquares = new int[7];
+
+        // excluding the starting square #3, and any previously selected squares
+        int[] excludedNums = new int[8];
         excludedNums[0] = 3;
 
         for (int i = 0; i < lavaSquares.length; i++) {
-            lavaSquares[i] = getRandoNum(1, 26, excludedNums);
+            lavaSquares[i] = getRandoNum(1, 25, excludedNums);
             excludedNums[i + 1] = lavaSquares[i];
         }
 
@@ -94,7 +97,7 @@ class javaLava {
 
                 else if (command.toLowerCase().equals("g")) {
                     System.out.println("");
-                    System.out.println("           ~FINISH LINE~\r\n" + //
+                    System.out.println("              ~FINISH~\r\n" + //
                             " ______ ______ ______ ______ ______ \r\n" + //
                             "|      |      |      |      |      |\r\n" + //
                             "|  21  |  22  |  23  |  24  |  25  |\r\n" + //
@@ -111,7 +114,7 @@ class javaLava {
                             "|      |      |      |      |      | \r\n" + //
                             "|  01  |  02  |  03  |  04  |  05  |\r\n" + //
                             "|______|______|______|______|______|\r\n" + //
-                            "                 ↑↑\r\n" + //
+                            "                 ^^\r\n" + //
                             "             START HERE");
                 }
 
@@ -142,12 +145,12 @@ class javaLava {
                     // RESET EVERYTHING
                     square = 3;
                     command = "";
-                    lavaSquares = new int[5];
-                    excludedNums = new int[6];
+                    lavaSquares = new int[7];
+                    excludedNums = new int[8];
                     excludedNums[0] = 3;
 
                     for (int i = 0; i < lavaSquares.length; i++) {
-                        lavaSquares[i] = getRandoNum(1, 26, excludedNums);
+                        lavaSquares[i] = getRandoNum(1, 25, excludedNums);
                         excludedNums[i + 1] = lavaSquares[i];
                     }
 
