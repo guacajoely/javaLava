@@ -3,7 +3,8 @@ import java.util.Scanner;
 
 class javaLava {
 
-    //get random number that also excludes an array of numbers from future selection
+    // get random number that also excludes an array of numbers from future
+    // selection
     public static int getRandoNum(int min, int max, int[] exclude) {
         Arrays.sort(exclude);
         int random = min + (int) ((max - min + 1 - exclude.length) * Math.random());
@@ -22,8 +23,8 @@ class javaLava {
 
         String command = "";
         int square = 3;
-        
-        //last auto save
+
+        // last auto save
         int lastSafeSquare = 3;
 
         // creates array of 7 squares between 1 and 25
@@ -44,9 +45,10 @@ class javaLava {
 
                 System.out.println("");
                 System.out.println("You are on square " + square);
-                System.out.println("Type 'U' to move up,");
-                System.out.println("'L' to move left,");
-                System.out.println("'R' to move right.");
+                System.out.println("Type 'U' or 'W' to move up,");
+                System.out.println("'L' or 'A' to move left,");
+                System.out.println("'R' or 'D' to move right.");
+                System.out.println("'B' or 'S' to move back");
                 System.out.println("'G' to view the grid");
                 System.out.println("or 'C' to CHEAT!");
 
@@ -55,15 +57,44 @@ class javaLava {
                 command = sc.nextLine();
 
                 // deal with user input
-                if (command.toLowerCase().equals("u")) {
+                if (command.toLowerCase().equals("u") || command.toLowerCase().equals("w")) {
+                    
+                     //add 5 to the previous square
                     square = square + 5;
                     System.out.println("");
 
-                    if (square < 26)
+                    if (square < 26) {
                         System.out.println("You stepped forward onto square " + square);
+
+                        boolean lava = false;
+
+                        for (int i = 0; i < lavaSquares.length; i++) {
+                            if (lavaSquares[i] == square) {
+                                lava = true;
+                            }
+                        }
+
+                        // if square is lava, print fail message
+                        if (lava) {
+                            System.out.println(
+                                    "THE GROUND CRUMBLES BENEATH YOU AND YOU FALL INTO A PIT OF MOLTEN LAVA");
+                            System.out
+                                    .println("You are returned to the last safe square. (" + lastSafeSquare + ")");
+                            // return the current square to the last safe square
+                            square = lastSafeSquare;
+                        }
+
+                        // if no lava, let user know they are safe
+                        else {
+                            System.out.println("The stone beneath your feet feels secure. This square is SAFE.");
+                            // update the last safe square to the current square
+                            lastSafeSquare = square;
+                        }
+                    }
+
                 }
 
-                else if (command.toLowerCase().equals("l")) {
+                else if (command.toLowerCase().equals("l") || command.toLowerCase().equals("a")) {
                     if (square != 1
                             && square != 6
                             && square != 11
@@ -72,6 +103,31 @@ class javaLava {
                         square--;
                         System.out.println("");
                         System.out.println("You stepped LEFT onto square " + square);
+
+                        boolean lava = false;
+
+                        for (int i = 0; i < lavaSquares.length; i++) {
+                            if (lavaSquares[i] == square) {
+                                lava = true;
+                            }
+                        }
+
+                        // if square is lava, print fail message
+                        if (lava) {
+                            System.out.println(
+                                    "THE GROUND CRUMBLES BENEATH YOU AND YOU FALL INTO A PIT OF MOLTEN LAVA");
+                            System.out
+                                    .println("You are returned to the last safe square. (" + lastSafeSquare + ")");
+                            // return the current square to the last safe square
+                            square = lastSafeSquare;
+                        }
+
+                        // if no lava, let user know they are safe
+                        else {
+                            System.out.println("The stone beneath your feet feels secure. This square is SAFE.");
+                            // update the last safe square to the current square
+                            lastSafeSquare = square;
+                        }
                     }
 
                     else {
@@ -82,7 +138,7 @@ class javaLava {
 
                 }
 
-                else if (command.toLowerCase().equals("r")) {
+                else if (command.toLowerCase().equals("r") || command.toLowerCase().equals("d")) {
                     if (square % 5 == 0) {
                         System.out.println("");
                         System.out.println("You can't move any further RIGHT!");
@@ -91,6 +147,75 @@ class javaLava {
                         square++;
                         System.out.println("");
                         System.out.println("You stepped RIGHT onto square " + square);
+
+                        boolean lava = false;
+
+                        for (int i = 0; i < lavaSquares.length; i++) {
+                            if (lavaSquares[i] == square) {
+                                lava = true;
+                            }
+                        }
+
+                        // if square is lava, print fail message
+                        if (lava) {
+                            System.out.println("THE GROUND CRUMBLES BENEATH YOU AND YOU FALL INTO A PIT OF MOLTEN LAVA");
+                            System.out.println("You are returned to the last safe square. (" + lastSafeSquare + ")");
+                            // return the current square to the last safe square
+                            square = lastSafeSquare;
+                        }
+
+                        // if no lava, let user know they are safe
+                        else {
+                            System.out.println("The stone beneath your feet feels secure. This square is SAFE.");
+                            // update the last safe square to the current square
+                            lastSafeSquare = square;
+                        }
+                    }
+
+                }
+
+                else if (command.toLowerCase().equals("b") || command.toLowerCase().equals("s")) {
+
+                    //if user is on row 2 or higher, let them go backwards
+                    if(square > 5){
+
+                        //subtract 5 from the previous square
+                        square = square - 5;
+                        System.out.println("");
+
+                        if (square < 26) {
+                            System.out.println("You stepped backward onto square " + square);
+
+                            boolean lava = false;
+
+                            for (int i = 0; i < lavaSquares.length; i++) {
+                                if (lavaSquares[i] == square) {
+                                    lava = true;
+                                }
+                            }
+
+                            // if square is lava, print fail message
+                            if (lava) {
+                                System.out.println("THE GROUND CRUMBLES BENEATH YOU AND YOU FALL INTO A PIT OF MOLTEN LAVA");
+                                System.out.println("You are returned to the last safe square. (" + lastSafeSquare + ")");
+                                // return the current square to the last safe square
+                                square = lastSafeSquare;
+                            }
+
+                            // if no lava, let user know they are safe
+                            else {
+                                System.out.println("The stone beneath your feet feels secure. This square is SAFE.");
+                                // update the last safe square to the current square
+                                lastSafeSquare = square;
+                            }
+                        }
+                    }
+
+                    //let user know they can't go backwards any further if on squares 1-5
+                    else{
+                        System.out.println("");
+                        System.out.println("Only cowards retreat...");
+                        System.out.println("");
                     }
 
                 }
