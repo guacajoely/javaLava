@@ -23,7 +23,7 @@ public class javaLava {
 
         //crtea intro ascii art
         AsciiArt asciiArt = new AsciiArt();
-        String text = "JAVA LAVA";
+        String text = "Java Lava";
         asciiArt.drawString(text, "*", asciiArt.new Settings(new Font("SansSerif", Font.BOLD, 22), text.length() * 15, 30));
 
         Scanner sc = new Scanner(System.in);
