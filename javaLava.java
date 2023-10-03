@@ -1,7 +1,8 @@
+import java.awt.Font;
 import java.util.Arrays;
 import java.util.Scanner;
 
-class javaLava {
+public class javaLava {
 
     // get random number that also excludes an array of numbers from future
     // selection
@@ -18,6 +19,12 @@ class javaLava {
     }
 
     public static void main(String[] args) {
+
+
+        //crtea intro ascii art
+        AsciiArt asciiArt = new AsciiArt();
+        String text = "JAVA LAVA";
+        asciiArt.drawString(text, "*", asciiArt.new Settings(new Font("SansSerif", Font.BOLD, 22), text.length() * 15, 30));
 
         Scanner sc = new Scanner(System.in);
 
